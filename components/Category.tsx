@@ -9,7 +9,7 @@ interface Product {
   image: string;
 }
 
-const API_URL = 'https://fakestoreapi.com/products';
+const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
 
 const Category: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -18,7 +18,7 @@ const Category: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(API_URL);
+        const response = await fetch(`${BASE_URL}products`);
         const data: Product[] = await response.json();
         setProducts(data.slice(0, 5)); // Load only the first 5 products
       } catch (error) {

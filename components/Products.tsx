@@ -10,9 +10,8 @@ interface Product {
   category: string;
   rating: { rate: number };
 }
+const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
 
-const API_URL = 'https://fakestoreapi.com/products';
-const CATEGORIES_URL = 'https://fakestoreapi.com/products/categories';
 
 const Products: React.FC = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
@@ -27,7 +26,7 @@ const Products: React.FC = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(CATEGORIES_URL);
+      const response = await fetch(`${BASE_URL}products/categories`);
       const data = await response.json();
       setCategories(data);
     } catch (error) {
@@ -40,7 +39,7 @@ const Products: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${API_URL}?limit=100`);
+      const response = await fetch(`${BASE_URL}products`);
       const data: Product[] = await response.json();
       setAllProducts(data);
     } catch (error) {
